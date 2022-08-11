@@ -81,8 +81,7 @@ MacroBoard.prototype.onMidi = function(status, data1, data2){
      // Tweak the knobs
      if(this.hasControl(path) && this.macro_values[2 - path[1] + this.macro_offset][path[2]] != -1)
      {
-         this.controller.track_bank.getTrack(path[2]).getPrimaryDevice().
-             getMacro(2 - path[1] + this.macro_offset).getAmount().set(data2, 128);
+         //this.controller.track_bank.getTrack(path[2]).getPrimaryDevice().getMacro(2 - path[1] + this.macro_offset).getAmount().set(data2, 128);
          this.macro_values[2 - path[1] + this.macro_offset][path[2]] = data2;
      }
 };
@@ -137,10 +136,10 @@ MacroBoard.prototype.enableAssignmentVisualFeedback = function(horizontal){
     if(horizontal)
         DeviceBoard.prototype.enableAssignmentVisualFeedback.call(this);
 
-    for(var i=0; i<8; i++){
-        for(var j=this.macro_offset; j<this.macro_offset + 3; j++)
-            this.controller.track_bank.getTrack(i).getPrimaryDevice().getMacro(j).getAmount().
-                setIndication(true);
+    for(var i=0; i<8; i++) {
+        for(var j=this.macro_offset; j<this.macro_offset + 3; j++) {
+            //this.controller.track_bank.getTrack(i).getPrimaryDevice().getMacro(j).getAmount().setIndication(true);
+        }
     }
 };
 
@@ -155,9 +154,9 @@ MacroBoard.prototype.disableAssignmentVisualFeedback = function(horizontal){
         DeviceBoard.prototype.disableAssignmentVisualFeedback.call(this);
 
     for(var i=0; i<8; i++){
-        for(var j=this.macro_offset; j<this.macro_offset + 3; j++)
-            this.controller.track_bank.getTrack(i).getPrimaryDevice().getMacro(j).getAmount().
-                setIndication(false);
+        for(var j=this.macro_offset; j<this.macro_offset + 3; j++) {
+            //this.controller.track_bank.getTrack(i).getPrimaryDevice().getMacro(j).getAmount().setIndication(false);
+        }
     }
 };
 

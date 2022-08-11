@@ -63,16 +63,20 @@ Controller.prototype.onMidi = function(status, data1, data2){
  * the controller just won't work on the channel bound to this board.
  */
 Controller.prototype.onSysEx = function(data){
-    if (data.matchesHexPattern('F0 00 20 29 02 11 77 ?? F7')){
+    // f0 00 20 29 02 11 77 07 f7
+    if (data.matchesHexPattern('F0002029021177??F7')){
         var i = data.hexByteAt(7);
 
         log_info("Received SysEx message from controller, switching from channel " +
             this.current_board_number + " to channel " + i);
 
+        if (i >= this.boards.length) {
+            
+        }
         this.enableBoard(i);
     } else {
         log_info("An unrecognized SysEx message has been caught. Here it is: ");
-        log_sysex(data);
+        log_info(data);
     }
 };
 
@@ -92,9 +96,13 @@ Controller.prototype.sendMidi = function(status, data1, data2){
 
 Controller.prototype.enableBoard = function(i){
     // Paranoia check
-    if(i < 0 || i >= this.boards.length)
-        throw "Error in enableBoard(" + i + "): Invalid board number. There " +
-            "is only " + this.boards.length + " boards available.";
+    if(i < 0 || i >= this.boards.length) {
+        log_error("Error in enableBoard(" + i + "): Invalid board number. There " +
+            "is only " + this.boards.length + " boards available.");
+        this.sendSysEx('F0002029021177' + intToHex(this.current_board_number) + 'F7')
+        return;
+    }
+    log_info("enableBoard B");
 
     if(this.current_board_number >= 0)
         this.currentBoard().disable();

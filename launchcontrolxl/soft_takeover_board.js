@@ -246,8 +246,8 @@ SoftTakeoverBoard.prototype.isAssigned = function(path){
 SoftTakeoverBoard.prototype.onMidi = function(status, data1, data2){
     // Paranoia check, but in case...
     if(status % 16 != this.channel)
-        throw "Warning: messages from channel " + status % 16 +
-              " also get sent to channel " + this.channel + "!";
+        log_error("Warning: messages from channel " + status % 16 +
+              " also get sent to channel " + this.channel + "!");
     var path = Board.getControlPath(status, data1);
 
     switch(this.getState(path)){
